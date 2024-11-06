@@ -17,6 +17,10 @@ if (!isset($_SESSION['user_id'])) {
     // echo ($product_name);
     // echo ($total);
 
+    $query = "INSERT INTO cart_tbl(product_id,user_id,qty)values('$product_id','$user_id','$product_qty')";
+    $result_query = mysqli_query($conn,$query);
+    
+
     if ($pay_method == "esewa") {
         $amount = "$price";
         $transaction_uuid = bin2hex(random_bytes(20));
@@ -79,8 +83,8 @@ if (!isset($_SESSION['user_id'])) {
     } else {
         $sql_query = "INSERT INTO order_details(product_id,customer_id,qty,payment_status,order_status,ordered_date)values('$product_id','$user_id','$product_qty','$pay_method','Pending','$today_date')";
 
-        $result = mysqli_query($conn,$sql_query);
-        if($result){
+        $result = mysqli_query($conn, $sql_query);
+        if ($result) {
             header('location:../showOrder.php');
         }
     }
